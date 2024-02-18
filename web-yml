@@ -1,0 +1,31 @@
+---
+- name: Execute script on AWS Linux
+  hosts: all
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Update package cache and install Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Install unzip package
+      apt:
+        name: unzip
+        state: present
+
+    - name: Download website files
+      get_url:
+        url: "https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip"
+        dest: "/tmp/little-fashion.zip"
+
+    - name: Unzip website files
+      unarchive:
+        src: "/tmp/little-fashion.zip"
+        dest: "/tmp"
+        remote_src: yes
+
+
+    - name: Copy files to web directory
+      shell: "cp -r /tmp/2127_little_fashion/* /var/www/html/"

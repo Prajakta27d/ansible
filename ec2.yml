@@ -1,0 +1,31 @@
+---
+- name: Create EC2 instance
+  hosts: all
+  gather_facts: no
+  vars:
+    instance_name: "my-ec2-instance"
+    instance_type: "t2.micro"
+    image_id: ""
+    key_name: ""
+    subnet_id: ""
+    security_group: ""
+    region: "ap-northeast-1"
+    wait_timeout: 500
+  tasks:
+    - name: Create EC2 instance
+      community.aws.ec2_instance:
+        name: "{{ instance_name }}"
+        instance_type: "{{ instance_type }}"
+        image_id: "{{ image_id }}"
+        key_name: "{{ key_name }}"
+        subnet_id: "{{ subnet_id }}"
+        region: "{{ region }}"
+        wait: yes
+        wait_timeout: "{{ wait_timeout }}"
+        security_groups:
+          - "{{ security_group }}"
+
+
+  environment:
+    AWS_ACCESS_KEY_ID: ""
+    AWS_SECRET_ACCESS_KEY: ""

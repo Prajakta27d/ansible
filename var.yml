@@ -1,0 +1,21 @@
+---
+- name: Create VPC
+  hosts: all
+  gather_facts: no
+  vars:
+    aws_access_key: ""
+    aws_secret_key: ""
+    region: "ap-northeast-1"
+    vpc_cidr: "10.10.0.0/24"
+    vpc_name: "Ansible VPC"
+    subnet_name: "Ansible Subnet"
+    subnet_cidr: "10.10.0.0/26"
+    igw_name: "Traffic IGW"
+    securitygroup_name: "Ansible Security Group"
+    ec2_tag: "WebServer"
+    ec2_key_directory: "/home/ubuntu/"
+    keypair_name: "del_key"
+  tasks:
+    - name: Include AWS role_vpc playbook
+      include_role:
+        name: ../../role_vpc
